@@ -1,11 +1,95 @@
-recursivement axiomatisable:
-je prends TOUTES les propositions vraies de l’arithmétique, et je crée un système d’axiomes dans lequel chacune de ces propositions est un axiome. J’obtiens alors un système d’axiomes (cohérent?) pas forcément très intéressant, mais qui semble violer le théorème de Gödel, puisque toute proposition vraie de l’arithmétique y est démontrable
+%recursivement axiomatisable:
+%je prends TOUTES les propositions vraies de l’arithmétique, et je crée un système d’axiomes dans lequel chacune de ces propositions est un axiome. J’obtiens alors un système d’axiomes (cohérent?) pas forcément très intéressant, mais qui semble violer le théorème de Gödel, puisque toute proposition vraie de l’arithmétique y est démontrable
+%
+%Ce système d’axiomes porte un nom, on l’appelle “True Arithmetics”, mais outre le fait qu’il est totalement inutile (dans le sens redondant?), il a un problème : si je vous donne une proposition quelconque, vous n’avez pas de moyen simple(POURQUOI?) de dire si oui ou non cette proposition fait partie des axiomes du système. De fait un tel système d’axiome est totalement inutilisable !
+%
+%C’est pour cela qu’en pratique, on s’impose de travailler avec des systèmes d’axiomes récursifs, c’est-à-dire faits d’axiomes qui sont potentiellement en nombre infini (POURQUOI?), mais tels que pour toute proposition, on puisse dire en un temps fini si oui ou non la proposition fait partie des axiomes.
+%
+%Le théorème de Gödel porte justement sur les systèmes d’axiomes récursifs
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ystèmes axiomatiques trop faibles pour couvrir l’arithmétique peuvent parfaitement échapper au théorème. C’est le cas notamment de l’arithmétique dite “de Presburger”, qui est celle qu’on obtient en considérant les nombres naturels munis de l’addition, mais sans la multiplication ! (POURQUOI)
+%==> mais la multiplication n'est pas une addition ? qu'est-ce qu'on peut démontrer avec la multiplication qu'on ne peut pas démontrer avec l'addition ?
+%
+%La raison pour laquelle la multiplication est indispensable pour que Gödel fonctionne est liée au fait que la réflexion de la méta-arithmétique dans l’arithmétique fait justement appel à la multiplication. Pour le voir, il faut s’attarder un peu sur le codage de Gödel. (OK)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%on peut prouver l'indécidabilité d'une proposition : e.g algo de l'arret
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Ce système d’axiomes porte un nom, on l’appelle “True Arithmetics”, mais outre le fait qu’il est totalement inutile (dans le sens redondant?), il a un problème : si je vous donne une proposition quelconque, vous n’avez pas de moyen simple(POURQUOI?) de dire si oui ou non cette proposition fait partie des axiomes du système. De fait un tel système d’axiome est totalement inutilisable !
-
-C’est pour cela qu’en pratique, on s’impose de travailler avec des systèmes d’axiomes récursifs, c’est-à-dire faits d’axiomes qui sont potentiellement en nombre infini (POURQUOI?), mais tels que pour toute proposition, on puisse dire en un temps fini si oui ou non la proposition fait partie des axiomes.
-
-Le théorème de Gödel porte justement sur les systèmes d’axiomes récursifs
+%si l'artithmetique est incoherente, le thm de godel est peut etre faux.
 
 
-on peut prouver l'indécidabilité d'une proposition : e.g algo de l'arret
+\documentclass[11pt, final]{article}  
+\usepackage{url}
+\usepackage{latexsym,epsf,float}  
+\usepackage[utf8]{inputenc}
+%\usepackage[cyr]{aeguill}
+\usepackage{xspace}
+\usepackage[francais]{babel}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+\usepackage[T1]{fontenc} %for french
+
+\title{Théorèmes d'incomplétude de Gödel}
+\author{Yann Thorimbert}
+\oddsidemargin 0cm
+\evensidemargin 0cm
+\textwidth 16.5cm
+
+\begin{document}   
+\maketitle
+
+%wikiedia transition demographique: diversité des cultures. Oui ! (va dans mon sens)
+
+%exponentielle: montrer par rapport a un lineaire avec un tableau et un graphe que c pas le nb absolu qui compte
+
+\abstract{
+blabla
+
+}
+
+\section{Codage}
+
+Nous supposons avoir besoin d'un nombre fini de symboles pour mener à bien une démonstration. Toute démonstration est une suite finie de formules composées uniquement des ces symboles. La table \ref{tab:symbols} montre un exemple purement fictif d'ensemble des symboles possibles. Une formule $S=\{s_1, s_2, ... , s_N\}$ de longueur $N$ est alors une suite de symboles, $s_i$ étant le $i$ème symbole de la formule $S$.
+
+\begin{table}
+	\begin{tabular}{l|c|c|l}
+	\hline
+	Nom en langage naturel & Symbole & Nom du symbole & Valeur du symbole \\
+	\hline
+%	Addition & $+$ & $s_1$ & 1 \\
+	Plus petit que & $<$ & $s_1$ & 1 \\
+	x & $x$ & $s_2$ & 2 \\
+	Pour tout & $\forall$ & $s_3$ & 3 \\
+%	Il existe à & $\exists$ & $s_4$ & 4 \\
+%	y & $y$ & $s_5$ & 5 \\
+%	Plus petit que & $<$ & $s_6$ & 6 \\
+%	z & $z$ & $s_7$ & 7 \\
+%	Tel que & $,$ & $s_8$ & 8 \\
+%	Plus grand que & $>=$ & $s_9$ & 9 \\
+	\end{tabular}
+\caption{Exemple de table des symboles.}
+\label{tab:symbols}
+\end{table}
+
+À toute formule on décide de faire correspondre un nombre $n(S)$:
+
+\begin{equation}
+n(F) = \sum_{i=1}^{N} p_i^{s_i},
+\end{equation}
+
+avec $p_i$ le $i$ème nombre premier.
+
+Par exemple, d'après la table \ref{tab:symbols}, le bout (incomplet) de formule "$\forall x < $" correspond à $S=\{\forall, x, < \}$
+
+
+
+une formule est composée de $N$ symboles successifs $s_i$, et toute formule peut être écrite comme $\sum_{i=1}^{N} p_i^{s_i}$ avec $p_i$ le $i$eme nombre premier. Donc a chaque formule correspond un nombre unique, et de chaque nombre on peut deduire la formule par decomposition en facteurs premiers.
+
+%\bibliographystyle{plain}
+%\bibliography{bibliography}
+
+\end{document}
